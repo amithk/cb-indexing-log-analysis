@@ -19,6 +19,8 @@ def run(filepath):
 	onlyRemove = {}
 	multipleReqids = {}
 
+	freqs = {}
+
 	f = open(filepath)
 	while True:
 		l = f.readline()
@@ -65,6 +67,13 @@ def run(filepath):
 			else:
 				binfo.Errored()
 
+		if l.find("scan failed") != -1:
+			# print "scan failed", l
+			ll = l.split()
+			reqid = ll[5].strip()
+			freqs[reqid] = True
+
+
 	closed = len([bi for bf, bi in bfiles.items() if bi.closed == True])
 	errored = len([bi for bf, bi in bfiles.items() if bi.errored == True])
 	print "Total new backfill files created:", len(bfiles)
@@ -76,6 +85,11 @@ def run(filepath):
 	# print "OnlyRemove:", onlyRemove
 	# print "Bfiles:", bfiles
 
+	obreqs = [bi.reqid for bi in bfiles.values() if bi.closed == False]
+	print "Open backfill files count:", len(obreqs)
+	print "Failed request count:", len(freqs)
+	print "Failed but no backfill issue:", len(set(freqs).difference(set(obreqs))), set(freqs).difference(set(obreqs))
+	print "Backfill not closed and request successful:", len(set(obreqs).difference(set(freqs))), set(obreqs).difference(set(freqs))
 
 if __name__ == "__main__":
 	if len(sys.argv) != 2:
