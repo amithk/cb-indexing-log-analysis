@@ -13,6 +13,9 @@ class bfileInfo:
 	def Errored(self):
 		self.errored = True
 
+	def __str__(self):
+		return self.reqid, self.bfile, self.closed, self.errored
+
 def run(filepath):
 
 	bfiles = {}
@@ -37,7 +40,7 @@ def run(filepath):
 				bfiles[bfile] = binfo
 			else:	
 				binfo = bfileInfo(reqid, bfile) 
-				multipleBinfos[bfile] = binfo
+				multipleReqids[bfile] = binfo
 
 		if l.find("removing backfill file") != -1:	
 			ll = l.split(" ")
@@ -52,7 +55,7 @@ def run(filepath):
 					binfo.Closed()
 				else:
 					binfo = bfileInfo(reqid, bfile)
-					multipleBinfos[bfile] = binfo
+					multipleReqids[bfile] = binfo
 
 		if l.find("remove backfill file") != -1 and l.find("unexpected failure") != -1:
 			ll = l.split(" ")
@@ -81,7 +84,7 @@ def run(filepath):
 	print "Total new backfill files close errors:", errored
 	print "Total new backfill files only removed:", len(onlyRemove)
 	print "Total new backfill files multiple Reqids:", len(multipleReqids)
-	print "Multiple Reqids:", multipleReqids
+	print "Multiple Reqids:", str(multipleReqids)
 	# print "OnlyRemove:", onlyRemove
 	# print "Bfiles:", bfiles
 

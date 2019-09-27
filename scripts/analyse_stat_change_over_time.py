@@ -65,7 +65,7 @@ def run(filename, bucket, pstat):
 if __name__ == '__main__':
 	if len(sys.argv) != 4:
 		print "Usage:\npython analyse_stat_change_over_time.py <log-file-path> <bucket-name> <stat-name>"
-		os.exit(0)
+		os._exit(0)
 
 	filename = sys.argv[1]
 	bucket = sys.argv[2]
