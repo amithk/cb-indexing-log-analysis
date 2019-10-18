@@ -35,7 +35,7 @@ def run(filename, bucket, pstat):
 
 if __name__ == '__main__':
 	if len(sys.argv) != 4:
-		print "Usage:\npython analyse_stat_change_over_time.py <log-file-path> <bucket-name> <stat-name>"
+		print "Usage:\npython sum_stat_for_all_indexes.py <log-file-path> <bucket-name> <stat-name>"
 		print "Expected file format: Single log line in file representing entire Periodic Stat log line (including timestamp)"
 		os._exit(0)
 
