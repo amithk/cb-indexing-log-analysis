@@ -3,6 +3,7 @@ import sys
 import os
 
 supported_stat_types = ["accumulative", "resetting"]
+default_prev_int_val = -99999999999
 
 """
 def get_index_names_from_stats(stats):
@@ -20,6 +21,7 @@ def run(filename, pstat, stype):
 	f = open(filename, "r")
 	i = 0
 	sum = 0
+	prev_map = {}
 	while True:
 		l = f.readline()
 		if not l:
@@ -37,8 +39,14 @@ def run(filename, pstat, stype):
 
 			if stype == "resetting":
 				sum += stats[k]
-			else:
-				raise NotImplmentedError
+			elif stype == "accumulative":
+				pval = prev_map.get(k, default_prev_int_val)
+				if pval == default_prev_int_val:
+					sum += stats[k]
+				else:
+					sum += (stats[k] - pval)
+
+				prev_map[k] = stats[k]
 
 	print "Sum =", sum
 
