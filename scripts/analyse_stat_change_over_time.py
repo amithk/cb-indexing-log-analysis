@@ -19,7 +19,7 @@ def run(filename, bucket, pstat):
 	i = 0
 	while True:
 		i += 1
-		print "i = ", i
+		#print "i = ", i
 		l = f.readline()
 		if not l:
 			break
